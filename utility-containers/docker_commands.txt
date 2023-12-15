@@ -1,0 +1,8 @@
+➜  utility-containers git:(main) docker run -it -d node
+
+➜  utility-containers git:(main) docker exec -it relaxed_grothendieck npm init
+
+
+➜  utility-containers git:(main) ✗ docker build -t node-util .
+
+➜  utility-containers git:(main) ✗ docker run -it -v /Users/gasperkojek/Projects/dockerKubernetesCourse/utility-containers:/app node-util npm init
