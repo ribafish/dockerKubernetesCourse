@@ -1,0 +1,54 @@
+version: "3.8"
+services:
+    mongodb:
+        container_name: "mongodb"
+        image: mongo
+        restart: always
+        volumes:
+            - mongodb:/data/db
+#        Not needed as docker compose automatically creates a network environment and puts all the services here
+#        networks:
+#            - multi-net
+        env_file:
+            - ./env/mongo.env
+#        environment:
+#            MONGO_INITDB_ROOT_USERNAME: admin
+#            MONGO_INITDB_ROOT_PASSWORD: secret
+
+    backend:
+#        build: ./backend
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+#            args:
+        ports:
+            - "80:80"
+        volumes:
+            - logs:/app/logs
+            - ./backend:/app
+            - /app/node_modules
+        env_file:
+            - ./env/backend.env
+        depends_on:
+            - mongodb
+
+    frontend:
+        build: ./frontend
+        ports:
+            - "3000:3000"
+        volumes:
+            - ./frontend/src:/app/src
+        depends_on:
+            - backend
+#       Interactive mode / same as -it options
+        stdin_open: true
+        tty: true
+
+# named volumes
+volumes:
+    mongodb:
+        name: "my-mongodb"
+    logs:
+
+#networks:
+#    multi-net:

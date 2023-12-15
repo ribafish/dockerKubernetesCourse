@@ -1,0 +1,12 @@
+docker network create multi-net
+
+docker run -d --rm --name mongodb --network multi-net -v multi-mongodb:/data/db -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=secret mongo     
+
+docker build -t multi-backend .
+
+docker run --name backend -d --rm --network multi-net -v /Users/gasperkojek/Projects/dockerKubernetesCourse/multi-01-starting-setup/backend
+➜  backend:/app -v logs:/app/logs -p 80:80 multi-backend 
+
+docker build -t frontend .
+
+docker run --name frontend --rm -d -p 3000:3000 -v /Users/gasperkojek/Projects/dockerKubernetesCourse/multi-01-starting-setup/frontend/src:/app/src fronted
