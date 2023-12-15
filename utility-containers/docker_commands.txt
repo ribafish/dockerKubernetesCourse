@@ -12,4 +12,9 @@ docker build -t my-npm .
  docker run -it -v /Users/gasperkojek/Projects/dockerKubernetesCourse/utility-containers:/app my-npm init
 
 docker run -it -v /Users/gasperkojek/Projects/dockerKubernetesCourse/utility-containers:/app my-npm install express --save 
- 
+
+ docker-compose up
+
+ docker-compose run npm init
+
+ docker-compose run --rm npm init
