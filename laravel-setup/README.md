@@ -39,6 +39,11 @@ If we want to build the custom images if there's any changes:
  Note: We can override things from images in `docker-compose.yaml` files, such as workdir or entrypoint instructions.
 
 
+ ### Making containers deployable
+
+ Currently because of bind mounts we can't deploy the application without copying the `src` dir to any other machine. To fix that we added `COPY` commands to `php.dockerfile` and `nginx.dockerfile`. Because we are copyin the stuff in the `.dockerfile`, we could also leave out volumes for `server` and `php` services - they're still left in to override the image for development purposes to reflect any changes immediately
+
+
  ### Side notes:
 
  - Had to use `mariadb:10.5.8` for mysql because of Apple Silicon - should be a drop-in replacement (it works)
